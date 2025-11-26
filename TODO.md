@@ -1,0 +1,3 @@
+- [x] Create DashboardController with index method to fetch deliveries, locations, teams, and calculate totals
+- [x] Update routes/web.php to use DashboardController for dashboard route
+- [ ] Test the dashboard to ensure data is fetched and displayed correctly
