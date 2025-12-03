@@ -149,7 +149,7 @@ class Monitortonase extends Component
     // =============================
     // RANGE DATE
     // =============================
-    $today = today();
+    $todays = today();
     $weekStart = now()->startOfWeek(Carbon::SUNDAY);
     $weekEnd   = now()->endOfWeek(Carbon::SUNDAY);
     $month     = now()->month;
@@ -167,7 +167,7 @@ class Monitortonase extends Component
     // =============================
     $this->reguToday = (clone $baseQuery)
         ->selectRaw('SUM(deliveries.berat_buah) as total_tonase')
-        ->whereDate('tanggal_pengiriman', $today)
+        ->whereDate('tanggal_pengiriman', $todays)
         ->orderBy('total_tonase', 'desc')
         ->get();
 
@@ -224,6 +224,6 @@ class Monitortonase extends Component
         $this->monitorTonase();
         $this->tableRegu();
 
-        return view('livewire.tools.monitor-tonase');
+        return view('livewire.tools.monitortonase');
     }
 }

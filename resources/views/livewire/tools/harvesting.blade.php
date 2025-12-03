@@ -14,7 +14,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 p-4 gap-4">
             <div class="flex flex-1 items-center space-x-4">
                 <div class="w-50">
-                    <flux:input type="date" max="2999-12-31" wire:model.live="tanggal" />
+                    <flux:input type="date" max="2999-12-31" wire:model.live="tanggal" placeholder="yyyy-mm-dd" />
                 </div>
                 <div class="w-50">
                     <flux:select wire:model.live="status">
@@ -36,7 +36,12 @@
                 </div>
 
                 <div class="w-70">
-                    <flux:input icon="magnifying-glass" placeholder="Search orders" wire:model.live.debounce.250ms="globalSearch" />
+                    <flux:select wire:model.live="regu">
+                        @foreach ($teams as $item)
+                            <flux:select.option value="{{ $item->id_regu }}">{{ $item->nama_regu }}</flux:select.option>
+                        @endforeach
+                        <flux:select.option value="">All Teams</flux:select.option>
+                    </flux:select>
                 </div>
             </div>
         </div>
@@ -45,24 +50,24 @@
             <table class="min-w-full table-fixed divide-y divide-neutral-700">
                 <thead>
                     <tr class="bg-neutral-900">
-                        <th class="px-4 py-2 text-left">No</th>
-                        <th class="px-4 py-2 text-left">Tanggal</th>
-                        <th class="px-4 py-2 text-left">Regu</th>
-                        <th class="px-4 py-2 text-left">Status Lokasi</th>
-                        <th class="px-4 py-2 text-left">Tonase</th>
+                        <th class="text-sm px-4 py-2 text-left">No</th>
+                        <th class="text-sm px-4 py-2 text-left">Tanggal</th>
+                        <th class="text-sm px-4 py-2 text-left">Regu</th>
+                        <th class="text-sm px-4 py-2 text-left">Status Lokasi</th>
+                        <th class="text-sm px-4 py-2 text-left">Tonase</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-neutral-700">
                     @forelse ($tableStatusTonase as $status)
                         <tr class="hover:bg-zinc-900 transition">
-                            <td class="px-4 py-2">
+                            <td class="text-sm px-4 py-2">
                                 {{ $tableStatusTonase->firstItem() + $loop->index }}
                             </td>
-                            <td class="px-4 py-2">
+                            <td class="text-sm px-4 py-2">
                                 {{ \Carbon\Carbon::parse($status->tanggal_pengiriman)->format('d M Y') }}</td>
-                            <td class="px-4 py-2">{{ $status->nama_regu }}</td>
-                            <td class="px-4 py-2">{{ $status->status_lokasi }}</td>
-                            <td class="px-4 py-2">{{ round($status->total_tonase / 1000) }} Ton</td>
+                            <td class="text-sm px-4 py-2">{{ $status->nama_regu }}</td>
+                            <td class="text-sm px-4 py-2">{{ $status->status_lokasi }}</td>
+                            <td class="text-sm px-4 py-2">{{ round($status->total_tonase / 1000) }} Ton</td>
                         </tr>
                     @empty
                         <tr>
