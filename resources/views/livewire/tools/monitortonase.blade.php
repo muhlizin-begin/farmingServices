@@ -1,5 +1,6 @@
 <div class="flex flex-wrap flex-1">
     {{-- Heading --}}
+    {{-- add --}}
     <div>
         <flux:heading size="xl">Dashboard</flux:heading>
         <flux:text class="mb-3">Pineapple weight monitoring information.</flux:text>

@@ -14,10 +14,10 @@
         <div class="grid grid-cols-1 md:grid-cols-2 p-4 gap-4">
             <div class="flex flex-1 items-center space-x-4">
                 <div class="w-50">
-                    <flux:input type="date" max="2999-12-31" wire:model.live="tanggal" placeholder="yyyy-mm-dd" />
+                    <flux:input type="date" max="2999-12-31" wire:model.live="tanggal" label="Tanggal" />
                 </div>
                 <div class="w-50">
-                    <flux:select wire:model.live="status">
+                    <flux:select wire:model.live="status" label="Status">
                         <flux:select.option value="">All Statuses</flux:select.option>
                         <flux:select.option value="NSFC">NSFC</flux:select.option>
                         <flux:select.option value="NSSC">NSSC</flux:select.option>
@@ -28,7 +28,7 @@
 
             <div class="flex flex-1 items-center justify-end space-x-4">
                 <div class="w-25">
-                    <flux:select wire:model.live="perPage">
+                    <flux:select wire:model.live="perPage" label="Page">
                         <flux:select.option value="10">10</flux:select.option>
                         <flux:select.option value="25">25</flux:select.option>
                         <flux:select.option value="50">50</flux:select.option>
@@ -36,7 +36,7 @@
                 </div>
 
                 <div class="w-70">
-                    <flux:select wire:model.live="regu">
+                    <flux:select wire:model.live="regu" label="Regu">
                         @foreach ($teams as $item)
                             <flux:select.option value="{{ $item->id_regu }}">{{ $item->nama_regu }}</flux:select.option>
                         @endforeach
