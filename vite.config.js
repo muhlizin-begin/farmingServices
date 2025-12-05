@@ -12,13 +12,13 @@ export default defineConfig({
         }),
         tailwindcss(),
     ],
-    // build: {
-    //     // Contoh: Mengubah direktori output ke 'public/dist'
-    //     outDir: 'build', 
+    build: {
+        // Contoh: Mengubah direktori output ke 'public/dist'
+        outDir: 'build', 
         
-    //     // Contoh lain: Jika Anda ingin output di root direktori proyek (JARANG DIGUNAKAN)
-    //     // outDir: 'dist', 
-    // },
+        // Contoh lain: Jika Anda ingin output di root direktori proyek (JARANG DIGUNAKAN)
+        // outDir: 'dist', 
+    },
     server: {
         cors: true,
     },
