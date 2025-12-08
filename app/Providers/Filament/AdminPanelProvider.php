@@ -24,6 +24,8 @@ class AdminPanelProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         return $panel
+            ->favicon(asset('blank.png?v=2'))
+            ->brandLogo(null)
             ->globalSearch(false)
             ->spa()
             ->default()
