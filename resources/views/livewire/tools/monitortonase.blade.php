@@ -7,6 +7,7 @@
         <flux:breadcrumbs>
             <flux:breadcrumbs.item href="{{ route('dashboard') }}" wire:navigate>Dashboard</flux:breadcrumbs.item>
             <flux:breadcrumbs.item href="{{ route('harvesting') }}" wire:navigate>Harvesting</flux:breadcrumbs.item>
+            <flux:breadcrumbs.item href="{{ route('quality') }}" wire:navigate>QC Report</flux:breadcrumbs.item>
         </flux:breadcrumbs>
     </div>
 

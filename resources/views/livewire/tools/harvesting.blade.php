@@ -6,6 +6,7 @@
         <flux:breadcrumbs>
             <flux:breadcrumbs.item href="{{ route('dashboard') }}" wire:navigate>Dashboard</flux:breadcrumbs.item>
             <flux:breadcrumbs.item href="{{ route('harvesting') }}" wire:navigate>Harvesting</flux:breadcrumbs.item>
+            <flux:breadcrumbs.item href="{{ route('quality') }}" wire:navigate>QC Report</flux:breadcrumbs.item>
         </flux:breadcrumbs>
     </div>
 
@@ -44,8 +45,8 @@
     <flux:separator text="Data Table" />
 
     {{-- Table data --}}
-    <div class="grid grid-cols-1 md:grid-cols-4 w-full gap-6">
-        <div class="md:col-span-3">
+    <div class="grid grid-cols-1 xl:grid-cols-4 w-full gap-6">
+        <div class="xl:col-span-3">
             <div class="rounded-md border border-neutral-700 shadow-md shadow-neutral-900">
                 <div class="grid grid-cols-1 md:grid-cols-2 p-4 gap-4">
                     <div class="flex flex-1 items-center space-x-4">
@@ -90,6 +91,7 @@
                                 <th class="text-sm px-4 py-2 text-left">No</th>
                                 <th class="text-sm px-4 py-2 text-left">Tanggal</th>
                                 <th class="text-sm px-4 py-2 text-left">Regu</th>
+                                <th class="text-sm px-4 py-2 text-left">Lokasi</th>
                                 <th class="text-sm px-4 py-2 text-left">Status Lokasi</th>
                                 <th class="text-sm px-4 py-2 text-left">Tonase</th>
                             </tr>
@@ -103,6 +105,7 @@
                                     <td class="text-sm px-4 py-2">
                                         {{ \Carbon\Carbon::parse($status->tanggal_pengiriman)->format('d M Y') }}</td>
                                     <td class="text-sm px-4 py-2">{{ $status->nama_regu }}</td>
+                                    <td class="text-sm px-4 py-2">{{ $status->nama_lokasi }}</td>
                                     <td class="text-sm px-4 py-2">
                                         <flux:badge size="sm"
                                             color="{{ $status->status_lokasi === 'NSFC' ? 'teal' : 'rose' }}">
@@ -131,7 +134,7 @@
             </div>
         </div>
 
-        <div class="md:col-start-4">
+        <div class="xl:col-start-4">
             <div class="rounded-md border border-neutral-700 shadow-md shadow-neutral-900 p-4 space-y-2">
                 <div class="flex items-start space-x-2 mb-3">
                     <div>
@@ -145,12 +148,11 @@
                     </div>
                 </div>
                 <div class="flex justify-start items-center space-x-2">
-                    <div class="w-30">
+                    <div class="w-35">
                         <flux:select size="sm" wire:model.live="range_pengiriman" placeholder="Statues">
                             <flux:select.option value="Today">Today</flux:select.option>
-                            <flux:select.option value="Weekly">Weekly</flux:select.option>
-                            <flux:select.option value="Monthly">Monthly</flux:select.option>
-                            <flux:select.option value="Annual">Annual</flux:select.option>
+                            <flux:select.option value="Weekly">This Week</flux:select.option>
+                            <flux:select.option value="Monthly">This Month</flux:select.option>
                         </flux:select>
                     </div>
                     <div class="w-20">
@@ -184,11 +186,11 @@
                     <div class="flex justify-center space-x-2 mt-6">
                         <div>
                             <flux:icon.x-circle variant="micro" class="text-neutral-400" />
-                        </div>   
+                        </div>
                         <div class="text-center text-neutral-400">
                             <flux:text class="text-xs text-neutral-400">
-                                    Tidak ada data.
-                                </flux:text>
+                                Tidak ada data.
+                            </flux:text>
                         </div>
                     </div>
                 @endforelse

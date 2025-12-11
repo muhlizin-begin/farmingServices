@@ -24,10 +24,10 @@ class AdminPanelProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         return $panel
+            ->spa()
             ->favicon(asset('blank.png?v=2'))
             ->brandLogo(null)
             ->globalSearch(false)
-            ->spa()
             ->default()
             ->id('admin')
             ->path('admin')

@@ -12,11 +12,13 @@ Route::get('/dashboard', function () {
     return view('dashboards');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-
-
 Route::get('/harvesting', function () {
     return view('harvesting');
 })->middleware(['auth', 'verified'])->name('harvesting');
+
+Route::get('/quality', function () {
+    return view('quality');
+})->middleware(['auth', 'verified'])->name('quality');
 
 
 Route::middleware(['auth'])->group(function () {

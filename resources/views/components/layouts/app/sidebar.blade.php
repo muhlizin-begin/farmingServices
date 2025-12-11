@@ -20,7 +20,8 @@
                     :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
                 <flux:navlist.item class="mt-2" icon="radio" :href="route('harvesting')"
                     :current="request()->routeIs('harvesting')" wire:navigate>{{ __('Harvesting') }}</flux:navlist.item>
-
+                    <flux:navlist.item class="mt-2" icon="clipboard-document-check" :href="route('quality')"
+                    :current="request()->routeIs('quality')" wire:navigate>{{ __('QC Report') }}</flux:navlist.item>
             </flux:navlist.group>
         </flux:navlist>
 

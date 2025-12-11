@@ -17,4 +17,9 @@ class Team extends Model
     {
         return $this->hasMany(Team::class, 'id_pengiriman');
     }
+
+    public function quality()
+    {
+        return $this->hasMany(Quality::class, 'id_kwalitas');
+    }
 }
