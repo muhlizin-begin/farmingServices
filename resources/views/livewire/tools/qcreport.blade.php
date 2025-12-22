@@ -46,7 +46,7 @@
 
     {{-- data table --}}
     <div class="grid grid-cols-1 xl:grid-cols-4 gap-6 w-full">
-        <div class="xl:col-span-3">
+        <div class="xl:col-span-4">
             <div class="rounded-md border border-neutral-700 shadow-md shadow-neutral-900">
                 <div class="grid grid-cols-1 md:grid-cols-2 p-4 gap-4">
                     <div class="flex flex-1 items-center space-x-4">

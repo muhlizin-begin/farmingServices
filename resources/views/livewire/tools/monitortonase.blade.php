@@ -13,7 +13,7 @@
 
     {{-- monitor tonase --}}
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-full gap-6 my-6">
-        <div class="rounded-md border border-neutral-700 shadow-md shadow-gray-900 p-4">
+        <div class="rounded-md bg-linear-to-r from-teal-950 to-zinc-800 border border-neutral-700 shadow-md shadow-gray-900 p-4">
             <flux:text>Today</flux:text>
             <flux:heading size="xl" class="mt-1" wire:poll.keep-alive>{{ $today }} Ton</flux:heading>
             <div class="flex items-center gap-2">
@@ -24,7 +24,7 @@
             </div>
         </div>
 
-        <div class="rounded-md border border-neutral-700 shadow-md shadow-gray-900 p-4">
+        <div class="rounded-md border bg-linear-to-r from-teal-950 to-zinc-800 border-neutral-700 shadow-md shadow-gray-900 p-4">
             <flux:text>This Week</flux:text>
             <flux:heading size="xl" class="mt-1" wire:poll.keep-alive>{{ $week }} Ton</flux:heading>
             <div class="flex items-center gap-2">
@@ -35,7 +35,7 @@
             </div>
         </div>
 
-        <div class="rounded-md border border-neutral-700 shadow-md shadow-gray-900 p-4">
+        <div class="rounded-md border bg-linear-to-r from-teal-950 to-zinc-800 border-neutral-700 shadow-md shadow-gray-900 p-4">
             <flux:text>This Month</flux:text>
             <flux:heading size="xl" class="mt-1" wire:poll.keep-alive>{{ $month }} Ton</flux:heading>
             <div class="flex items-center gap-2">
@@ -46,7 +46,7 @@
             </div>
         </div>
 
-        <div class="rounded-md border border-neutral-700 shadow-md shadow-gray-900 p-4">
+        <div class="rounded-md border bg-linear-to-r from-teal-950 to-zinc-800 border-neutral-700 shadow-md shadow-gray-900 p-4">
             <flux:text>Annual</flux:text>
             <flux:heading size="xl" class="mt-1" wire:poll.keep-alive>{{ $annual }} Ton</flux:heading>
             <div class="flex items-center gap-2">
