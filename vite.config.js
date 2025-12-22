@@ -12,10 +12,10 @@ export default defineConfig({
         }),
         tailwindcss(),
     ],
-    // build: {
-    //     // 'public/build'
-    //     outDir: 'build', 
-    // },
+    build: {
+        // 'public/build'
+        outDir: 'build', 
+    },
     server: {
         cors: true,
     },
