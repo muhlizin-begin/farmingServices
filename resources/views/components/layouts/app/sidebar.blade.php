@@ -3,7 +3,6 @@
 
 <head>
     @include('partials.head')
-    <script src="https://cdn.jsdelivr.net/npm/echarts@6.0.0/dist/echarts.min.js"></script>
 </head>
 
 <body class="min-h-screen bg-zinc-800">
@@ -128,7 +127,7 @@
 
     @fluxScripts
 
-
+ @livewireScripts
 </body>
 
 </html>

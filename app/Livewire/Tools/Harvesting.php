@@ -3,7 +3,6 @@
 namespace App\Livewire\Tools;
 
 use App\Models\Delivery;
-use App\Models\Location;
 use App\Models\Quality;
 use App\Models\Team;
 use Carbon\Carbon;
@@ -14,6 +13,52 @@ use Livewire\WithPagination;
 class Harvesting extends Component
 {
     use WithPagination, WithoutUrlPagination;
+
+    // Data untuk chart tonase perPG
+    public $chartData = [];
+    public function loadChartData()
+    {
+        $baseYear = Delivery::selectRaw('strftime("%Y", tanggal_pengiriman) as year')->first()->year;
+        $baseQuery = Delivery::selectRaw("
+            strftime('%m', tanggal_pengiriman) as month,
+            SUM(berat_buah) as total_berat
+        ")
+            ->groupBy('month')
+            ->orderBy('month');
+
+        $pg1Data = (clone $baseQuery)->whereIn('id_regu', $this->pg1)->get();
+        $pg2Data = (clone $baseQuery)->whereIn('id_regu', $this->pg2)->get();
+        $pg3Data = (clone $baseQuery)->whereIn('id_regu', $this->pg3)->get();
+
+        $this->chartData = [
+            'categories' => [],
+            'series' => [
+                ['name' => 'PG1', 'data' => []],
+                ['name' => 'PG2', 'data' => []],
+                ['name' => 'PG3', 'data' => []],
+            ],
+            'text' => 'Chart Tonase Plantation ' . $baseYear,
+        ];
+
+        foreach ($pg1Data as $row) {
+            $this->chartData['categories'][] =
+                Carbon::create()->month((int)$row->month)->format('M');
+
+            $this->chartData['series'][0]['data'][] =
+                round($row->total_berat / 1000); // konversi ke ton
+        }
+
+        foreach ($pg2Data as $row) {
+            $this->chartData['series'][1]['data'][] =
+                round($row->total_berat / 1000); // konversi ke ton
+        }
+
+        foreach ($pg3Data as $row) {
+            $this->chartData['series'][2]['data'][] =
+                round($row->total_berat / 1000); // konversi ke ton
+        }
+    }
+
 
     // Data untuk persentase kwalitas perPG
     public $persentaseKwalitas1;
@@ -64,6 +109,8 @@ class Harvesting extends Component
             ->value('total_berat') ?? 0;
     }
 
+    
+
     // Reset pagination dan filter untuk tabel tonase
     public function updating($property)
     {
@@ -88,6 +135,8 @@ class Harvesting extends Component
 
     public function render()
     {
+        $this->loadChartData();
+
         $this->tonasePG();
         $this->persentaseKwalitas();
         $this->selectregu();

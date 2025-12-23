@@ -10,16 +10,53 @@
         </flux:breadcrumbs>
     </div>
 
+    <div class="grid grid-auto gap-6 w-full">
+        <div class="rounded-lg border border-neutral-700 shadow-md shadow-gray-900 bg-teal-950 col-span-3 p-4">
+           <div id="chart" class="h-[350px]"></div>
+
+<script>
+    const chartData = @json($chartData);
+
+    if (chartData && chartData.series && chartData.series.length) {
+        new ApexCharts(document.querySelector("#chart"), {
+            chart: {
+                type: 'area',
+                height: 350,
+                toolbar: { show: false }
+            },
+            title: {
+                text: chartData.text,
+                style: { color: '#fff' }
+            },
+            series: chartData.series,
+            dataLabels: { enabled: true },
+            stroke: { curve: 'smooth' },
+            xaxis: {
+                categories: chartData.categories,
+                labels: { style: { colors: '#fff' } }
+            },
+            yaxis: {
+                labels: { style: { colors: '#fff' } }
+            }
+        }).render();
+    }
+</script>
+
+
+
+        </div>
+    </div>
+
     <div class="grid grid-cols-1 md:grid-cols-3 w-full gap-6">
         <div class="rounded-lg border border-neutral-700 shadow-md shadow-gray-900 bg-teal-950 p-4">
             <div class="flex justify-between items-start">
                 <div>
                     <flux:heading>Plantation 1</flux:heading>
-                    <flux:text class="mt-2 text-teal-500">{{ number_format(round($tonasePG1 / 1000), 0, ',', '.') }}
+                    <flux:text class="mt-2 text-amber-500">{{ number_format(round($tonasePG1 / 1000), 0, ',', '.') }}
                         Ton</flux:text>
                 </div>
                 <div class="text-center">
-                    <flux:text class="text-white text-xs">Kwalitas Panen</flux:text>
+                    <flux:text class="text-xs">Kwalitas Panen</flux:text>
                     <flux:heading size="xl" class="text-teal-500 mt-1">{{ $persentaseKwalitas1 }}%
                     </flux:heading>
                 </div>
@@ -29,11 +66,11 @@
             <div class="flex justify-between items-start">
                 <div>
                     <flux:heading>Plantation 2</flux:heading>
-                    <flux:text class="mt-2 text-teal-500">{{ number_format(round($tonasePG2 / 1000), 0, ',', '.') }}
+                    <flux:text class="mt-2 text-amber-500">{{ number_format(round($tonasePG2 / 1000), 0, ',', '.') }}
                         Ton</flux:text>
                 </div>
                 <div class="text-center">
-                    <flux:text class="text-white text-xs">Kwalitas Panen</flux:text>
+                    <flux:text class="text-xs">Kwalitas Panen</flux:text>
                     <flux:heading size="xl" class="text-teal-500 mt-1">{{ $persentaseKwalitas2 }}%
                     </flux:heading>
                 </div>
@@ -43,11 +80,11 @@
             <div class="flex justify-between items-start">
                 <div>
                     <flux:heading>Plantation 3</flux:heading>
-                    <flux:text class="mt-2 text-teal-500">{{ number_format(round($tonasePG3 / 1000), 0, ',', '.') }}
+                    <flux:text class="mt-2 text-amber-500">{{ number_format(round($tonasePG3 / 1000), 0, ',', '.') }}
                         Ton</flux:text>
                 </div>
                 <div class="text-center">
-                    <flux:text class="text-white text-xs">Kwalitas Panen</flux:text>
+                    <flux:text class="text-xs">Kwalitas Panen</flux:text>
                     <flux:heading size="xl" class="text-teal-500 mt-1">{{ $persentaseKwalitas3 }}%
                     </flux:heading>
                 </div>
@@ -61,7 +98,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 p-4 gap-4">
                 <div class="flex flex-1 items-center space-x-4">
                     <div class="w-50">
-                        <flux:input type="date" max="2999-12-31" wire:model.live="tanggal" label="Tanggal" />
+                        <flux:input type="date" max="2999-12-31" wire:model.lazy="tanggal" label="Tanggal" />
                     </div>
                     <div class="w-50">
                         <flux:select wire:model.live="status" label="Status">
@@ -98,43 +135,43 @@
                 <table class="min-w-full table-fixed divide-y divide-neutral-700">
                     <thead>
                         <tr class="bg-neutral-900">
-                            <th class="text-sm px-4 py-2 text-left">No</th>
-                            <th class="text-sm px-4 py-2 text-left">Tanggal</th>
-                            <th class="text-sm px-4 py-2 text-left">Regu</th>
-                            <th class="text-sm px-4 py-2 text-left">Lokasi</th>
-                            <th class="text-sm px-4 py-2 text-left">Status Lokasi</th>
-                            <th class="text-sm px-4 py-2 text-left">Tonase</th>
-                            <th class="text-sm px-4 py-2 text-left">Kememaran</th>
-                            <th class="text-sm px-4 py-2 text-left">Crown</th>
-                            <th class="text-sm px-4 py-2 text-left">Bonggol</th>
+                            <th class="text-xs md:text-sm px-4 py-2 text-left">No</th>
+                            <th class="text-xs md:text-sm px-4 py-2 text-left">Tanggal</th>
+                            <th class="text-xs md:text-sm px-4 py-2 text-left">Regu</th>
+                            <th class="text-xs md:text-sm px-4 py-2 text-left">Lokasi</th>
+                            <th class="text-xs md:text-sm px-4 py-2 text-left">Status Lokasi</th>
+                            <th class="text-xs md:text-sm px-4 py-2 text-left">Tonase</th>
+                            <th class="text-xs md:text-sm px-4 py-2 text-left">Kememaran</th>
+                            <th class="text-xs md:text-sm px-4 py-2 text-left">Crown</th>
+                            <th class="text-xs md:text-sm px-4 py-2 text-left">Bonggol</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-neutral-700">
                         @forelse ($tableStatusTonase as $item)
                             <tr class="hover:bg-zinc-900 transition">
-                                <td class="text-sm px-4 py-2">
+                                <td class="text-xs md:text-sm px-4 py-2">
                                     {{ $tableStatusTonase->firstItem() + $loop->index }}
                                 </td>
-                                <td class="text-sm px-4 py-2">
+                                <td class="text-xs md:text-sm px-4 py-2">
                                     {{ \Carbon\Carbon::parse($item->tanggal_pengiriman)->format('d M Y') }}</td>
-                                <td class="text-sm px-4 py-2">{{ $item->nama_regu }}</td>
-                                <td class="text-sm px-4 py-2">{{ $item->nama_lokasi }}</td>
-                                <td class="text-sm px-4 py-2">
+                                <td class="text-xs md:text-sm px-4 py-2">{{ $item->nama_regu }}</td>
+                                <td class="text-xs md:text-sm px-4 py-2">{{ $item->nama_lokasi }}</td>
+                                <td class="text-xs md:text-sm px-4 py-2">
                                     <flux:badge size="sm"
                                         color="{{ $item->status_lokasi === 'NSFC' ? 'teal' : 'rose' }}">
                                         {{ $item->status_lokasi }}</flux:badge>
                                 </td>
-                                <td class="text-sm px-4 py-2 text-teal-500">
+                                <td class="text-xs md:text-sm px-4 py-2 text-teal-500">
                                     {{ round($item->total_tonase / 1000) }}
                                     Ton</td>
                                 <td
-                                    class="text-sm px-4 py-2 {{ $item->kememaran === 'C' ? 'text-red-500' : 'text-teal-500' }}">
+                                    class="text-xs md:text-sm px-4 py-2 {{ $item->kememaran === 'C' ? 'text-red-500' : 'text-teal-500' }}">
                                     {{ $item->kememaran }}</td>
                                 <td
-                                    class="text-sm px-4 py-2 {{ $item->crown === 'C' ? 'text-red-500' : 'text-teal-500' }}">
+                                    class="text-xs md:text-sm px-4 py-2 {{ $item->crown === 'C' ? 'text-red-500' : 'text-teal-500' }}">
                                     {{ $item->crown }}</td>
                                 <td
-                                    class="text-sm px-4 py-2 {{ $item->bonggol === 'C' ? 'text-red-500' : 'text-teal-500' }}">
+                                    class="text-xs md:text-sm px-4 py-2 {{ $item->bonggol === 'C' ? 'text-red-500' : 'text-teal-500' }}">
                                     {{ $item->bonggol }}</td>
                             </tr>
                         @empty
