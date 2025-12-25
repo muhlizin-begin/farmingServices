@@ -15,26 +15,48 @@
             <flux:heading class="text-amber-500" size="lg">Chart Plantations</flux:heading>
             <flux:text class="text-xs mt-1">Kwalitas Regu</flux:text>
             <div class="flex items-center justify-center">
-                <div id="chart"></div>
+                <div id="chart1"></div>
                 <script>
-                    const chartRank = @json($chartRank);
+    // Bungkus dalam fungsi agar bisa dipanggil berulang kali
+    function initChartRank() {
+        const chartElement = document.querySelector("#chart1");
+        const chartRank = @json($chartRank);
 
-                    if(chartRank && chartRank.series && chartRank.series.length) {
-                        new ApexCharts(document.querySelector("#chart"), {
-                            chart: {
-                                type: 'donut',
-                                width: 350,
-                            },
-                            dataLabels: { enabled: true },
-                            series: chartRank.series,
-                            labels: chartRank.labels,
-                            legend: {
-                                position: 'bottom',
-                            }
-                        }).render();
-                    }
-                    
-                </script>
+        // Pastikan elemen ada dan data tersedia
+        if (chartElement && chartRank && chartRank.series && chartRank.series.length) {
+            
+            // Bersihkan konten di dalam element sebelum render ulang
+            // Ini penting untuk mencegah chart duplikat saat navigasi SPA
+            chartElement.innerHTML = '';
+
+            const options = {
+                chart: {
+                    type: 'donut',
+                    width: 350,
+                },
+                dataLabels: { enabled: true },
+                series: chartRank.series,
+                labels: chartRank.labels,
+                legend: {
+                    position: 'bottom',
+                }
+            };
+
+            const chart = new ApexCharts(chartElement, options);
+            chart.render();
+        }
+    }
+
+    // 1. Jalankan saat navigasi via wire:navigate selesai
+    document.addEventListener('livewire:navigated', () => {
+        initChartRank();
+    });
+
+    // 2. Jalankan saat pertama kali halaman dimuat (standard reload)
+    document.addEventListener('DOMContentLoaded', () => {
+        initChartRank();
+    });
+</script>
             </div>
         </div>
         <div class="rounded-md border border-neutral-700 shadow-md shadow-neutral-900 p-4">

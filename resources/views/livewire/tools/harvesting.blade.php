@@ -12,38 +12,73 @@
 
     <div class="grid grid-auto gap-6 w-full">
         <div class="rounded-lg border border-neutral-700 shadow-md shadow-gray-900 bg-teal-950 col-span-3 p-4">
-           <div id="chart" class="h-[350px]"></div>
+            <div id="chart" class="h-[350px]"></div>
+                <script>
+                    // Gunakan fungsi agar bisa dipanggil berulang kali
+                    function initChart() {
+                        // Ambil data terbaru dari Laravel
+                        const chartData = @json($chartData);
+                        const chartElement = document.querySelector("#chart");
 
-<script>
-    const chartData = @json($chartData);
+                        // Pastikan elemen ada dan data valid
+                        if (chartElement && chartData && chartData.series && chartData.series.length) {
 
-    if (chartData && chartData.series && chartData.series.length) {
-        new ApexCharts(document.querySelector("#chart"), {
-            chart: {
-                type: 'area',
-                height: 350,
-                toolbar: { show: false }
-            },
-            title: {
-                text: chartData.text,
-                style: { color: '#fff' }
-            },
-            series: chartData.series,
-            dataLabels: { enabled: true },
-            stroke: { curve: 'smooth' },
-            xaxis: {
-                categories: chartData.categories,
-                labels: { style: { colors: '#fff' } }
-            },
-            yaxis: {
-                labels: { style: { colors: '#fff' } }
-            }
-        }).render();
-    }
-</script>
+                            // Bersihkan konten sebelumnya agar tidak terjadi double render saat SPA
+                            chartElement.innerHTML = '';
 
+                            const options = {
+                                chart: {
+                                    type: 'area',
+                                    height: 350,
+                                    toolbar: {
+                                        show: false
+                                    }
+                                },
+                                title: {
+                                    text: chartData.text,
+                                    style: {
+                                        color: '#fff'
+                                    }
+                                },
+                                series: chartData.series,
+                                dataLabels: {
+                                    enabled: true
+                                },
+                                stroke: {
+                                    curve: 'smooth'
+                                },
+                                xaxis: {
+                                    categories: chartData.categories,
+                                    labels: {
+                                        style: {
+                                            colors: '#fff'
+                                        }
+                                    }
+                                },
+                                yaxis: {
+                                    labels: {
+                                        style: {
+                                            colors: '#fff'
+                                        }
+                                    }
+                                },
+                            };
 
+                            const chart = new ApexCharts(chartElement, options);
+                            chart.render();
+                        }
+                    }
 
+                    // PENTING: Jalankan setiap kali navigasi Livewire (wire:navigate) selesai
+                    document.addEventListener('livewire:navigated', () => {
+                        initChart();
+                    });
+
+                    // PENTING: Jalankan saat pertama kali halaman di-load tanpa navigasi
+                    document.addEventListener('DOMContentLoaded', () => {
+                        initChart();
+                    });
+                </script>
         </div>
     </div>
 
