@@ -11,6 +11,88 @@ use Livewire\WithPagination;
 class Qcreport extends Component
 {
     use WithPagination, WithoutUrlPagination;
+
+    public $pg1 = [1, 2, 3, 4, 5, 6, 7, 8];
+    public $pg2 = [9, 10, 11, 12, 13, 14, 15, 16];
+    public $pg3 = [17, 18, 19, 20, 21, 22, 23, 24];
+    public $rankPG1 = [];
+    public $rankPG2 = [];
+    public $rankPG3 = [];
+    public $chartRankPG1;
+    public $chartRankPG2;
+    public $chartRankPG3;
+    public $chartRank = [];
+
+    public function chartRankRegu()
+    {
+        $map = ['A' => 3, 'B' => 2, 'C' => 1];
+        $groups = [
+            'chartRankPG1' => $this->pg1,
+            'chartRankPG2' => $this->pg2,
+            'chartRankPG3' => $this->pg3,
+        ];
+
+        foreach ($groups as $property => $ids) {
+            $baseQuery = Quality::select('id_regu', 'kememaran', 'crown')
+                ->whereIn('id_regu', $ids)
+                ->get();
+
+            $maxScore = $baseQuery->count() * 6;
+            $nilaiRegu = $baseQuery->sum(function ($item) use ($map) {
+                return ($map[$item->kememaran] ?? 0) + ($map[$item->crown] ?? 0);
+            });
+            $this->$property = $maxScore > 0 ? round(($nilaiRegu / $maxScore) * 100, 2) : 0;
+        }
+
+        $this->chartRank = [
+            'series' => [
+                $this->chartRankPG1,
+                $this->chartRankPG2,
+                $this->chartRankPG3,
+            ],
+            'labels' => ['PG 1', 'PG 2', 'PG 3'],
+        ];
+    }
+
+    public function rankRegu()
+    {
+        $map = ['A' => 3, 'B' => 2, 'C' => 1];
+
+        // Buat daftar grup yang akan diproses
+        $groups = [
+            'rankPG1' => $this->pg1,
+            'rankPG2' => $this->pg2,
+            'rankPG3' => $this->pg3,
+        ];
+
+        foreach ($groups as $property => $ids) {
+            $this->$property = Quality::join('teams', 'teams.id_regu', '=', 'qualities.id_regu')
+                ->select('teams.nama_regu', 'qualities.id_regu', 'qualities.kememaran', 'qualities.crown')
+                ->whereIn('qualities.id_regu', $ids)
+                ->get()
+                ->groupBy('id_regu')
+                ->map(function ($items) use ($map) {
+                    $first = $items->first();
+
+                    $totalScore = $items->sum(function ($item) use ($map) {
+                        return ($map[$item->kememaran] ?? 0) + ($map[$item->crown] ?? 0);
+                    });
+
+                    $maxScore = $items->count() * 6;
+
+                    return (object) [
+                        'id_regu'     => $first->id_regu,
+                        'nama_regu'   => $first->nama_regu,
+                        'total_score' => $maxScore > 0 ? round(($totalScore / $maxScore) * 100, 2) : 0,
+                        'jumlah_data' => $items->count()
+                    ];
+                })
+                ->sortByDesc('total_score')
+                ->values();
+        }
+    }
+
+
     // Table tonase
     public $perPage = '';
     public $tanggal = '';
@@ -25,6 +107,9 @@ class Qcreport extends Component
 
     public function render()
     {
+        $this->rankRegu();
+        $this->chartRankRegu();
+
         $teams = Team::select('id_regu', 'nama_regu')
             ->groupBy('id_regu', 'nama_regu')
             ->get();
